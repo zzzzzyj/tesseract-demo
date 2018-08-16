@@ -1,0 +1,18 @@
+<view class="page">
+  <view class="page__hd">
+    <view class="page__title">拍照</view>
+    <view class="page__desc">请对准后拍照，注意避免倾斜，不要拍入多余文字 </view>
+  </view>
+  <view class="page__bd page__bd_spacing">
+    <camera device-position="back" flash="off" binderror="error" style="width: 100%; height: 150rpx;"></camera>
+    <view class='camera_btn'>
+      <button type="primary" bindtap="takePhoto">拍照</button>
+    </view>
+    <view class='camera_btn'>
+      <button type="primary" bindtap="chooseImage">选择照片</button>
+    </view>
+    <!-- <view class='camera_btn'>
+      <image wx:if="{{src}}" mode="widthFix" src="{{src}}"></image>
+    </view> -->
+  </view>
+</view>

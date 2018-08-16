@@ -1,0 +1,14 @@
+{
+  "pages": [
+    "pages/scan/scan",
+    "pages/login/login",
+    "pages/index/index",
+    "pages/camera/camera"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  }
+}

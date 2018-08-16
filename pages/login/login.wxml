@@ -1,0 +1,18 @@
+<!--pages/auth/login/login.wxml-->
+<view class="container">
+  <view class="form-box">
+    <view class="form-title">
+      <image class="logo" src="/images/ship.png" />
+    </view>
+    <view class="form-item">
+      <input class="loginname" value="{{loginname}}" bindinput="bindLoginNameInput" maxlength='20' placeholder="登录名" />
+      <text class="sendsms" id="send-sms-auth-code" wx:if="{{ loginname.length > 0 }}" bindtap="sendSmsAuthCode">{{smsprompt}}</text>
+      <image wx:if="{{ loginname.length > 0 }}" id="clear-loginname" class="clear" src="/images/clear.png" bindtap="clearInput" />
+    </view>
+    <view class="form-item">
+      <input class="password" value="{{password}}" password bindinput="bindPasswordInput" maxlength='20' placeholder="密码" />
+      <image class="clear" id="clear-password" wx:if="{{ password.length > 0 }}" src="/images/clear.png" bindtap="clearInput" />
+    </view>
+    <button class="login-btn" bindtap="login">登录</button>
+  </view>
+</view>

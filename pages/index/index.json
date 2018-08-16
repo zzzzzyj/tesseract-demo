@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "van-button": "/style/vant-weapp/button/index",
+    "van-cell": "/style/vant-weapp/cell/index",
+    "van-cell-group": "/style/vant-weapp/cell-group/index",
+    "van-icon": "/style/vant-weapp/icon/index"
+  }
+}

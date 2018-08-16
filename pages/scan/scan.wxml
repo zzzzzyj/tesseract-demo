@@ -1,0 +1,18 @@
+<view class="page">
+  <view class="page__hd">
+    <view class="page__title">图片识别</view>
+    <view class="page__desc">1. 扫条码，已上传的条码不能再上传 </view>
+    <view class="page__desc">2. 拍摄照片，注意位置要对准 </view>
+    <view class="page__desc">3. 上传条码和图片 </view>
+  </view>
+  <view class="page__bd page__bd_spacing">
+    <button class="weui-btn" type="default" bindtap='scanBarcode'>
+    {{barcode==''? '点此扫码': barcode}}
+    </button>
+    <button class="weui-btn" type="default" bindtap='takePhoto'>点此拍照</button>
+    <image class="weui-btn" wx:if="{{imageSrc}}" mode="widthFix" src="{{imageSrc}}"></image>
+    <!-- <button class='weui-btn' type="default" wx:if="{{ocr_text}}">{{ocr_text}}</button> -->
+    <input wx:if="{{ocr_text}}" value='{{ocr_text}}'/>
+    <button class="weui-btn" type="primary" bindtap='uploadData'>点此上传</button>
+  </view>
+</view>
