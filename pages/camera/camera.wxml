@@ -14,5 +14,14 @@
     <!-- <view class='camera_btn'>
       <image wx:if="{{src}}" mode="widthFix" src="{{src}}"></image>
     </view> -->
+
+    <van-panel title="相关截图(选填) (最多3张)">
+      <view class="gallery">
+        <view class="item" wx:for="{{images}}" wx:key="">
+          <image src="{{item}}" data-src="{{item}}" bindtap="previewImage" mode="aspectFill" />
+          <view class="delete" bindtap="delete" data-index="{{index}}">X</view>
+        </view>
+      </view>
+    </van-panel>
   </view>
 </view>

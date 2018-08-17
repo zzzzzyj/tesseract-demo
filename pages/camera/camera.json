@@ -1,1 +1,5 @@
-{}
+{
+  "usingComponents": {
+    "van-popup": "/style/vant-weapp/panel/index"
+  }
+}

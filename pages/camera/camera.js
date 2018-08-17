@@ -1,6 +1,7 @@
 Page({
   data: {
     // src: '',
+    images: []
   },
 
   onShow() {

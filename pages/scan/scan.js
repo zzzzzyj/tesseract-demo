@@ -8,7 +8,9 @@ Page({
   data: {
     barcode: '',
     imageSrc: '',
-    ocr_text: ''
+    ocr_text: '',
+    isUploaded: false,
+    showPopup: false
   },
 
   scanBarcode: function() {
@@ -118,10 +120,27 @@ Page({
         that.setData({
           ocr_text: result
         })
+        that.setData({
+          isUploaded: true
+        })
       } else {
         wx.hideLoading()
       }
     })
+  },
+
+  generateSerialNumber: function(tess_id) {
+      
+  },
+
+  bindOcrInput: function (e) {
+    this.setData({
+      ocr_text: e.detail.value
+    });
+  },
+
+  onClose() {
+    this.setData({ showPopup: false });
   },
 
   /**

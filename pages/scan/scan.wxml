@@ -7,12 +7,14 @@
   </view>
   <view class="page__bd page__bd_spacing">
     <button class="weui-btn" type="default" bindtap='scanBarcode'>
-    {{barcode==''? '点此扫码': barcode}}
+      {{barcode==''? '扫码': barcode}}
     </button>
-    <button class="weui-btn" type="default" bindtap='takePhoto'>点此拍照</button>
-    <image class="weui-btn" wx:if="{{imageSrc}}" mode="widthFix" src="{{imageSrc}}"></image>
+    <button class="weui-btn" type="default" bindtap='takePhoto'>拍照</button>
+    <!-- <image class="weui-btn" wx:if="{{imageSrc}}" mode="widthFix" src="{{imageSrc}}"></image> -->
+
     <!-- <button class='weui-btn' type="default" wx:if="{{ocr_text}}">{{ocr_text}}</button> -->
-    <input wx:if="{{ocr_text}}" value='{{ocr_text}}'/>
-    <button class="weui-btn" type="primary" bindtap='uploadData'>点此上传</button>
+    <input wx:if="{{ocr_text}}" value='{{ocr_text}}' bindinput="bindOcrInput" />
+    <button wx:if="{{!isUploaded}}" class="weui-btn" type="primary" bindtap='uploadData'>上传图片</button>
+    <button wx:if="{{isUploaded}}" class="weui-btn" type="warn" bindtap='uploadData'>生成记录</button>
   </view>
 </view>
