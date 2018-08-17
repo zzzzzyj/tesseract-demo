@@ -1,8 +1,9 @@
 {
   "pages": [
-    "pages/scan/scan",
+    
     "pages/login/login",
     "pages/index/index",
+    "pages/scan/scan",
     "pages/camera/camera"
   ],
   "window": {

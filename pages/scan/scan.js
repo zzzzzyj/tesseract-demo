@@ -8,9 +8,6 @@ Page({
   data: {
     barcode: '',
     imageSrc: '',
-    ocr_text: '',
-    isUploaded: false,
-    showPopup: false
   },
 
   scanBarcode: function() {
@@ -36,7 +33,7 @@ Page({
 
   uploadData: function() {
     let barcode = this.data.barcode
-    if(barcode == ''){
+    if (barcode == '') {
       wx.showModal({
         title: '错误信息',
         content: '请先扫条码',
@@ -60,51 +57,70 @@ Page({
     util.serverRequest(url, params).then(res => {
       var result = res.data.result
       if (result) {
-        console.log(result)
-        that.uploadPhoto('zyj.ticket', result)
+        that.uploadPhoto(result)
       } else {
         wx.hideLoading()
         wx.showModal({
           title: '错误信息',
-          content: '上传失败，可能此条码已存在',
+          content: '上传失败，请重试',
           showCancel: false,
         })
       }
     })
   },
 
-  uploadPhoto: function(model, res_id) {
+  uploadPhoto: function(tess_id) {
     let that = this;
-    const tempImagepath = wx.getStorageSync('temp_image_path')
+    const tempImagepaths = wx.getStorageSync('temp_image_paths')
 
-    wx.uploadFile({
-      url: util.apiUploadBinaryUrl,
-      filePath: tempImagepath,
-      name: 'ufile',
-      formData: {
-        'model': model,
-        'id': res_id
-      },
-      header: {
-        "Content-Type": "multipart/form-data",
-        'Cookie': 'session_id = ' + wx.getStorageSync('token')
-      },
-      success: function(res) {
-        console.log(res)
-        wx.hideLoading()
-        that.tesseractOCR(res_id)
-      },
+    for (let tempImagepath of tempImagepaths) {
 
-      fail: function(res) {
-        wx.hideLoading()
-        wx.showModal({
-          title: '错误提示',
-          content: '上传图片失败',
-          showCancel: false,
-          success: function(res) {}
-        })
+      //create serial record
+      let params = {
+        "tess_id": tess_id,
       }
-    });
+      util.serverRequest(util.apiCreateTicketSerialNumber, params).then(res => {
+        let res_id = res.data.result
+        if (res_id) {
+
+          //upload image
+          wx.uploadFile({
+            url: util.apiUploadBinaryUrl,
+            filePath: tempImagepath,
+            name: 'ufile',
+            formData: {
+              'model': 'zyj.ticket.serial.number',
+              'id': res_id
+            },
+            header: {
+              "Content-Type": "multipart/form-data",
+              'Cookie': 'session_id = ' + wx.getStorageSync('token')
+            },
+            success: function(res) {
+              console.log(res)
+              that.tesseractOCR(res_id)
+            },
+
+            fail: function(res) {
+              wx.hideLoading()
+              wx.showModal({
+                title: '错误提示',
+                content: '上传图片失败',
+                showCancel: false,
+                success: function(res) {}
+              })
+            }
+          });
+        } else {
+          wx.hideLoading()
+          wx.showModal({
+            title: '错误信息',
+            content: '上传失败，请重试',
+            showCancel: false,
+          })
+        }
+      })
+    }
   },
 
   tesseractOCR: function(res_id) {
@@ -117,51 +133,19 @@ Page({
       var result = res.data.result
       if (result) {
         console.log(result)
-        that.setData({
-          ocr_text: result
-        })
-        that.setData({
-          isUploaded: true
+        wx.setStorage({
+          key: 'temp_image_paths',
+          data: [],
+          success: function(res) {
+            wx.hideLoading()
+            wx.redirectTo({
+              url: '/pages/index/index',
+            })
+          }
         })
       } else {
         wx.hideLoading()
       }
     })
-  },
-
-  generateSerialNumber: function(tess_id) {
-      
-  },
-
-  bindOcrInput: function (e) {
-    this.setData({
-      ocr_text: e.detail.value
-    });
-  },
-
-  onClose() {
-    this.setData({ showPopup: false });
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-    let that = this
-    wx.getStorage({
-      key: 'temp_image_path',
-      success: function(res) {
-        console.log(res)
-        if (res.data) {
-          that.setData({
-            imageSrc: res.data
-          })
-        }
-      },
-      fail: function(err) {
-        console.log(err)
-      }
-    })
-  },
-
+  }
 })

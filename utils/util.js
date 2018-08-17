@@ -12,6 +12,7 @@ const apiGetTickets = apiRootUrl + '/api/get_tickets'
 const apiCreateTicket = apiRootUrl + '/api/create_record'
 const apiUploadBinaryUrl = apiRootUrl + '/api/binary/upload_attachment'
 const apiTesseractOCRUrl = apiRootUrl + '/api/tesseract/ocr'
+const apiCreateTicketSerialNumber = apiRootUrl + '/api/create_serial_number'
 
 var wx_request = promisify(wx.request)
 var wx_login = promisify(wx.login)
@@ -167,5 +168,6 @@ module.exports = {
   apiGetTickets,
   apiCreateTicket,
   apiUploadBinaryUrl,
-  apiTesseractOCRUrl
+  apiTesseractOCRUrl,
+  apiCreateTicketSerialNumber
 }
