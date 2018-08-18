@@ -4,7 +4,8 @@ const lang = wx.getSystemInfoSync().language
 /**
  * 封装wx.request
  */
-const apiRootUrl = 'http://127.0.0.1:8069'
+// const apiRootUrl = 'http://127.0.0.1:8069'
+const apiRootUrl = 'https://www.zhangyejun.club'
 
 const apiAuthByCodeUrl = apiRootUrl + '/wechat_mp_auth/auth_by_code'
 const apiAuthByLoginUrl = apiRootUrl + '/wechat_mp_auth/auth_by_login'
